@@ -4,12 +4,15 @@
     "server": "nodemon index.js"
   },
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dayjs": "^1.11.11",
     "express": "^4.19.2",
     "express-winston": "^4.2.0",
     "mongoose": "^8.4.4",
     "nodemon": "^3.1.4",
     "socket.io": "^4.7.5",
+    "uuid": "^10.0.0",
     "winston": "^3.13.0"
   }
 }

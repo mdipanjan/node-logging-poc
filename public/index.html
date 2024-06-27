@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,55 +7,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node.js Telescope</title>
     <script src="/socket.io/socket.io.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        #logs { height: 80vh; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
-        .log-entry { margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .timestamp { color: #888; }
-        .level { font-weight: bold; }
-        .level-info { color: #4CAF50; }
-        .level-warn { color: #FFC107; }
-        .level-error { color: #F44336; }
-        .status-code { font-weight: bold; margin-right: 10px; }
-        .status-2xx { color: #4CAF50; }
-        .status-3xx { color: #2196F3; }
-        .status-4xx { color: #FFC107; }
-        .status-5xx { color: #F44336; }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1>Node.js Telescope</h1>
-    <div id="logs"></div>
-    <script>
-        const socket = io();
-        const logsDiv = document.getElementById('logs');
+    <div class="sidebar">
+        <h1>Telescope</h1>
+        <ul>
+            <li class="nav"><a href="#"><span class="icon">🔄</span>Requests</a></li>
+            <li class="nav"><a href="#"><span class="icon">⌨️</span>Commands</a></li>
+            <li class="nav"><a href="#"><span class="icon">🕒</span>Schedule</a></li>
+            <li class="nav"><a href="#"><span class="icon">💼</span>Jobs</a></li>
+            <!-- <li class="nav"><a href="#"><span class="icon">📦</span>Batches</a></li>
+            <li class="nav"><a href="#"><span class="icon">💾</span>Cache</a></li>
+            <li class="nav"><a href="#"><span class="icon">🗑️</span>Dumps</a></li>
+            <li class="nav"><a href="#"><span class="icon">🎭</span>Events</a></li>
+            <li class="nav"><a href="#"><span class="icon">⚠️</span>Exceptions</a></li>
+            <li class="nav"><a href="#"><span class="icon">🔒</span>Gates</a></li>
+            <li class="nav"><a href="#"><span class="icon">🌐</span>HTTP Client</a></li>
+            <li class="nav"><a href="#"><span class="icon">📝</span>Logs</a></li>
+            <li class="nav"><a href="#"><span class="icon">✉️</span>Mail</a></li>
+            <li class="nav"><a href="#"><span class="icon">🏗️</span>Models</a></li>
+            <li class="nav"><a href="#"><span class="icon">🔔</span>Notifications</a></li>
+            <li class="nav"><a href="#"><span class="icon">🔍</span>Queries</a></li> -->
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h2>HTTP Client</h2>
+            <input type="text" class="search-box" placeholder="Search Tag">
+        </div>
+        <table  id="logs-table">
+            <thead>
+                <tr>
+                    <th>Verb</th>
+                    <th>URI</th>
+                    <th>Status</th>
+                    <th>Happened</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Log entries will be inserted here -->
+            </tbody>
+        </table>
+        <div class="hidden" id="detailsView">
+            <button class="back-button" onclick="showListView()">← Back to List</button>
+            <h2>Log Entry Details</h2>
+            <div id="logDetails"></div>
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'Payload')">Payload</button>
+                <button class="tablinks" onclick="openTab(event, 'Headers')">Headers</button>
+            </div>
+            <div id="Payload" class="tabcontent" style="display: block;">
+                <pre id="payloadContent"></pre>
+            </div>
+            <div id="Headers" class="tabcontent">
+                <pre id="headersContent"></pre>
+            </div>
+        </div>
+    </div>
 
-        function addLogEntry(log) {
-            const logEntry = document.createElement('div');
-            logEntry.className = 'log-entry';
-            
-            let statusCodeHtml = '';
-            if (log.metadata && log.metadata.statusCode) {
-                const statusClass = `status-${Math.floor(log.metadata.statusCode / 100)}xx`;
-                statusCodeHtml = `<span class="status-code ${statusClass}">${log.metadata.statusCode}</span>`;
-            }
-
-            logEntry.innerHTML = `
-                <span class="timestamp">${log.timestamp}</span>
-                <span class="level level-${log.level}">[${log.level}]</span>
-                ${statusCodeHtml}
-                <span class="message">${log.message}</span>
-                <pre>${JSON.stringify(log.metadata, null, 2)}</pre>
-            `;
-            logsDiv.appendChild(logEntry);
-            logsDiv.scrollTop = logsDiv.scrollHeight;
-        }
-
-        socket.on('logs', (logs) => {
-            logs.forEach(addLogEntry);
-        });
-
-        socket.on('newLog', addLogEntry);
-    </script>
+    </div>
+    
+    <script type="text/javascript" src="./app.js"></script>
 </body>
 </html>
+
+
+
+
