@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Telescope</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        #logs { height: 80vh; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+        .log-entry { margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .timestamp { color: #888; }
+        .level { font-weight: bold; }
+        .level-info { color: #4CAF50; }
+        .level-warn { color: #FFC107; }
+        .level-error { color: #F44336; }
+        .status-code { font-weight: bold; margin-right: 10px; }
+        .status-2xx { color: #4CAF50; }
+        .status-3xx { color: #2196F3; }
+        .status-4xx { color: #FFC107; }
+        .status-5xx { color: #F44336; }
+    </style>
+</head>
+<body>
+    <h1>Node.js Telescope</h1>
+    <div id="logs"></div>
+    <script>
+        const socket = io();
+        const logsDiv = document.getElementById('logs');
+
+        function addLogEntry(log) {
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            let statusCodeHtml = '';
+            if (log.metadata && log.metadata.statusCode) {
+                const statusClass = `status-${Math.floor(log.metadata.statusCode / 100)}xx`;
+                statusCodeHtml = `<span class="status-code ${statusClass}">${log.metadata.statusCode}</span>`;
+            }
+
+            logEntry.innerHTML = `
+                <span class="timestamp">${log.timestamp}</span>
+                <span class="level level-${log.level}">[${log.level}]</span>
+                ${statusCodeHtml}
+                <span class="message">${log.message}</span>
+                <pre>${JSON.stringify(log.metadata, null, 2)}</pre>
+            `;
+            logsDiv.appendChild(logEntry);
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        socket.on('logs', (logs) => {
+            logs.forEach(addLogEntry);
+        });
+
+        socket.on('newLog', addLogEntry);
+    </script>
+</body>
+</html>
