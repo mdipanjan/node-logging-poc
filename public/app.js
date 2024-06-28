@@ -78,9 +78,9 @@ async function showDetails(logId) {
                 <span class="detail-value status-${logDetails.statusCode}">${logDetails.statusCode}</span>
             </div>
         `;
-
-        document.getElementById('payloadContent').textContent = JSON.stringify(logDetails.headers || {}, null, 2);
-        document.getElementById('headersContent').textContent = JSON.stringify(logDetails.body || {}, null, 2);
+        console.log(logDetails.body)
+        document.getElementById('headersContent').textContent = JSON.stringify(logDetails.headers || {}, null, 2);
+        document.getElementById('payloadContent').textContent = logDetails.body;
 
     } catch (error) {
         console.error('Error fetching log details:', error);

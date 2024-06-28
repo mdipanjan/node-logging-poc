@@ -17,8 +17,9 @@ th, td { text-align: left; padding: 12px; border-bottom: 1px solid #e2e8f0; }
 .tab button:hover { background-color: #ddd; }
 .tab button.active { background-color: #ccc; }
 .tabcontent { display: none; padding: 6px 12px; border: 1px solid #ccc; border-top: none; }
-.nav{
-    padding: 6px;
+.nav{ padding: 6px; }
+.icon{
+    margin-right: 6px;
 }
 .hidden {
     display: none !important;
@@ -27,7 +28,9 @@ th, td { text-align: left; padding: 12px; border-bottom: 1px solid #e2e8f0; }
 #logs-table {
     display: table;
 }
-
+.req-header{
+    margin-bottom: 20px;
+}
 #detailsView {
     display: block;
 }

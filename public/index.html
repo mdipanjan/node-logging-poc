@@ -18,10 +18,10 @@
     <div class="sidebar">
         <h1>Telescope</h1>
         <ul>
-            <li class="nav"><a href="#"><span class="icon">🔄</span>Requests</a></li>
-            <li class="nav"><a href="#"><span class="icon">⌨️</span>Commands</a></li>
-            <li class="nav"><a href="#"><span class="icon">🕒</span>Schedule</a></li>
-            <li class="nav"><a href="#"><span class="icon">💼</span>Jobs</a></li>
+            <li class="nav"><a class="nav-link" href="#"><span class="icon">🔄</span>Requests</a></li>
+            <li class="nav"><a class="nav-link" href="#"><span class="icon">⌨️</span>Commands</a></li>
+            <li class="nav"><a class="nav-link" href="#"><span class="icon">🕒</span>Schedule</a></li>
+            <li class="nav"><a  class="nav-link" href="#"><span class="icon">💼</span>Jobs</a></li>
             <!-- <li class="nav"><a href="#"><span class="icon">📦</span>Batches</a></li>
             <li class="nav"><a href="#"><span class="icon">💾</span>Cache</a></li>
             <li class="nav"><a href="#"><span class="icon">🗑️</span>Dumps</a></li>
@@ -56,19 +56,24 @@
             </tbody>
         </table>
         <div class="hidden" id="detailsView">
-            <button class="back-button" onclick="showListView()">← Back to List</button>
-            <h2>Log Entry Details</h2>
-            <div id="logDetails"></div>
-            <div class="tab">
-                <button class="tablinks active" onclick="openTab(event, 'Payload')">Payload</button>
-                <button class="tablinks" onclick="openTab(event, 'Headers')">Headers</button>
-            </div>
-            <div id="Payload" class="tabcontent" style="display: block;">
-                <pre id="payloadContent"></pre>
-            </div>
-            <div id="Headers" class="tabcontent">
-                <pre id="headersContent"></pre>
-            </div>
+           <div>
+                <button class="back-button" onclick="showListView()">← Back to List</button>
+                <h2 class="req-header">Request details: </h2>
+                <div id="logDetails"></div>
+                <div class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'Payload')">Payload</button>
+                    <button class="tablinks" onclick="openTab(event, 'Headers')">Headers</button>
+                </div>
+                <div id="Payload" class="tabcontent" style="display: block;">
+                    <pre id="payloadContent"></pre>
+                </div>
+                <div id="Headers" class="tabcontent">
+                    <pre id="headersContent"></pre>
+                </div>
+           </div>
+           <div>
+            
+           </div>
         </div>
     </div>
 
